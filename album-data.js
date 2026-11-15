@@ -1,6 +1,6 @@
 /**
  * Memory Album Configuration & Media Data
- * Populated with Arohi photo collection.
+ * Populated with 19 curated Arohi photos.
  */
 
 const ALBUM_DATA = {
@@ -13,7 +13,7 @@ const ALBUM_DATA = {
     paper: '#fbfaf6',           // Creamy paper color
     shadow: 0.6,                // Shadow intensity (0 to 1)
     spine: 0.55,                // Spine shading depth (0 to 1)
-    thickness: 10,              // 3D paper stack thickness in pixels
+    thickness: 8,               // 3D paper stack thickness in pixels
     indicator: 'dots',          // 'dots', 'counter', or 'none'
     indicatorColor: 'rgba(23, 23, 23, 0.72)'
   },
@@ -107,7 +107,7 @@ const ALBUM_DATA = {
     {
       id: 'sheet-4',
       frontCaption: '',
-      frontFill: 'bleed',
+      frontFill: 'framed',
       frontImage: 'assets/arohi/arohi_10.jpg',
       frontVideo: '',
       backCaption: '',
@@ -133,7 +133,7 @@ const ALBUM_DATA = {
       frontImage: 'assets/arohi/arohi_14.jpg',
       frontVideo: '',
       backCaption: '',
-      backFill: 'framed',
+      backFill: 'bleed',
       backImage: 'assets/arohi/arohi_15.jpg',
       backVideo: ''
     },
@@ -157,72 +157,6 @@ const ALBUM_DATA = {
       backCaption: '',
       backFill: 'bleed',
       backImage: 'assets/arohi/arohi_19.jpg',
-      backVideo: ''
-    },
-    {
-      id: 'sheet-9',
-      frontCaption: '',
-      frontFill: 'bleed',
-      frontImage: 'assets/arohi/arohi_20.jpg',
-      frontVideo: '',
-      backCaption: '',
-      backFill: 'framed',
-      backImage: 'assets/arohi/arohi_21.jpg',
-      backVideo: ''
-    },
-    {
-      id: 'sheet-10',
-      frontCaption: '',
-      frontFill: 'bleed',
-      frontImage: 'assets/arohi/arohi_22.jpg',
-      frontVideo: '',
-      backCaption: '',
-      backFill: 'bleed',
-      backImage: 'assets/arohi/arohi_23.jpg',
-      backVideo: ''
-    },
-    {
-      id: 'sheet-11',
-      frontCaption: '',
-      frontFill: 'bleed',
-      frontImage: 'assets/arohi/arohi_24.jpg',
-      frontVideo: '',
-      backCaption: '',
-      backFill: 'bleed',
-      backImage: 'assets/arohi/arohi_25.jpg',
-      backVideo: ''
-    },
-    {
-      id: 'sheet-12',
-      frontCaption: '',
-      frontFill: 'framed',
-      frontImage: 'assets/arohi/arohi_26.jpg',
-      frontVideo: '',
-      backCaption: '',
-      backFill: 'bleed',
-      backImage: 'assets/arohi/arohi_27.jpg',
-      backVideo: ''
-    },
-    {
-      id: 'sheet-13',
-      frontCaption: '',
-      frontFill: 'bleed',
-      frontImage: 'assets/arohi/arohi_28.jpg',
-      frontVideo: '',
-      backCaption: '',
-      backFill: 'bleed',
-      backImage: 'assets/arohi/arohi_29.jpg',
-      backVideo: ''
-    },
-    {
-      id: 'sheet-14',
-      frontCaption: '',
-      frontFill: 'bleed',
-      frontImage: 'assets/arohi/arohi_30.jpg',
-      frontVideo: '',
-      backCaption: '',
-      backFill: 'framed',
-      backImage: '',
       backVideo: ''
     },
 ]
