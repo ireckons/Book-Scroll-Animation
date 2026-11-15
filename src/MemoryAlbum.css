@@ -122,7 +122,7 @@
   font-weight: 500;
   letter-spacing: 0.02em;
   color: rgba(23, 23, 23, 0.45);
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   padding: 6px 16px;
@@ -130,11 +130,32 @@
   z-index: 10;
   pointer-events: none;
   opacity: 0.85;
+  white-space: nowrap;
   transition: opacity 0.4s ease;
+}
+
+.mobile-hint {
+  display: none;
 }
 
 @media (max-width: 600px) {
   .ui-hints {
+    top: calc(env(safe-area-inset-top, 12px) + 8px);
+    font-size: 11px;
+    padding: 5px 14px;
+  }
+  .desktop-hint {
     display: none;
+  }
+  .mobile-hint {
+    display: inline;
+  }
+  .indicator-bar {
+    bottom: calc(env(safe-area-inset-bottom, 14px) + 14px) !important;
+    gap: 6px;
+  }
+  .indicator-dot {
+    height: 7px;
+    border-radius: 3.5px;
   }
 }

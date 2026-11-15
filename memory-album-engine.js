@@ -231,7 +231,10 @@
      */
     updateDimensions() {
       const b = this.bookConfig;
-      const size = clamp(numOrDefault(b.size, 0.68), 0.2, 1.0);
+      const isMobile = window.innerWidth <= 768 || window.innerHeight > window.innerWidth;
+      // On mobile / portrait, use a larger scale so the book fills the screen comfortably
+      const defaultSize = isMobile ? 0.90 : 0.68;
+      const size = clamp(numOrDefault(b.size, defaultSize), 0.2, 1.0);
       const aspect = clamp(numOrDefault(b.aspect, 0.76), 0.3, 2.0);
 
       this.container.style.setProperty('--ph', `min(${(size * 100).toFixed(3)}cqh, ${(size * 100 / (2 * aspect)).toFixed(3)}cqw)`);
@@ -1308,10 +1311,26 @@
           return;
         }
 
-        // Tap/click trigger if pointer didn't drag far
-        const dist = Math.hypot(e.clientX - dragInfo.x0, e.clientY - dragInfo.y0);
-        if (dist < 6) {
-          this.turn(dragInfo.side);
+        // Tap or swipe trigger for mobile and desktop
+        const dx = e.clientX - dragInfo.x0;
+        const dy = e.clientY - dragInfo.y0;
+        const dist = Math.hypot(dx, dy);
+
+        // Quick horizontal swipe on touchscreens
+        if (Math.abs(dx) > 20 && Math.abs(dx) > Math.abs(dy)) {
+          this.turn(dx < 0 ? 1 : -1);
+          return;
+        }
+
+        // Tap on either half of book or screen
+        if (dist < 12) {
+          const coords = this.pointerToBookCoords(e.clientX, e.clientY);
+          if (coords.side) {
+            this.turn(coords.side);
+          } else {
+            const isRightSide = e.clientX > window.innerWidth / 2;
+            this.turn(isRightSide ? 1 : -1);
+          }
         }
       });
 

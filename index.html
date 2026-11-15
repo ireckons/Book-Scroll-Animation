@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Memory Album — 3D Interactive Photo Book</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Arohi — 3D Memory Album</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -151,7 +151,7 @@
       font-weight: 500;
       letter-spacing: 0.02em;
       color: rgba(23, 23, 23, 0.45);
-      background: rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.45);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       padding: 6px 16px;
@@ -159,12 +159,33 @@
       z-index: 10;
       pointer-events: none;
       opacity: 0.85;
+      white-space: nowrap;
       transition: opacity 0.4s ease;
+    }
+
+    .mobile-hint {
+      display: none;
     }
 
     @media (max-width: 600px) {
       .ui-hints {
+        top: calc(env(safe-area-inset-top, 12px) + 8px);
+        font-size: 11px;
+        padding: 5px 14px;
+      }
+      .desktop-hint {
         display: none;
+      }
+      .mobile-hint {
+        display: inline;
+      }
+      .indicator-bar {
+        bottom: calc(env(safe-area-inset-bottom, 14px) + 14px) !important;
+        gap: 6px;
+      }
+      .indicator-dot {
+        height: 7px;
+        border-radius: 3.5px;
       }
     }
   </style>
@@ -172,7 +193,10 @@
 <body>
 
   <div id="album-viewport" tabindex="0" role="region" aria-label="Photo book">
-    <div class="ui-hints">Drag or click page edge to flip • Double-click to close • Arrow keys</div>
+    <div class="ui-hints">
+      <span class="desktop-hint">Drag or click page edge to flip • Double-click to close • Arrow keys</span>
+      <span class="mobile-hint">Swipe or tap to turn pages • Tap dots below</span>
+    </div>
     
     <!-- Background layer -->
     <div id="album-background" style="position: absolute; inset: 0; z-index: 0; pointer-events: none;"></div>
