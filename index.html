@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Album — 3D Interactive Photo Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #e7e3da;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    #album-viewport {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      container-type: size;
+      isolation: isolate;
+      outline: none;
+      touch-action: pan-y pinch-zoom;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #album-viewport:focus-visible {
+      box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.35);
+    }
+
+    /* 3D Perspective Stage */
+    .perspective-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .book-origin {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
+      pointer-events: none;
+    }
+
+    /* Page face styling */
+    .face-container {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .shading-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .media-cover {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Folio & caption text */
+    .page-caption {
+      position: absolute;
+      bottom: 8%;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: calc(var(--ph) * 0.021);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 62%;
+    }
+
+    .page-folio {
+      position: absolute;
+      bottom: 8%;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: calc(var(--ph) * 0.021);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Spread indicator dots */
+    .indicator-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: calc((100cqh - var(--ph)) / 4);
+      transform: translateY(50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      z-index: 4;
+      max-width: 90vw;
+      margin: 0 auto;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 6px 16px;
+    }
+
+    .indicator-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .indicator-dot {
+      height: 6px;
+      padding: 0;
+      border: 0;
+      border-radius: 3px;
+      cursor: pointer;
+      background: rgba(23, 23, 23, 0.72);
+      transition: width 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* UI Hint overlay */
+    .ui-hints {
+      position: absolute;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: rgba(23, 23, 23, 0.45);
+      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 6px 16px;
+      border-radius: 20px;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0.85;
+      transition: opacity 0.4s ease;
+    }
+
+    @media (max-width: 600px) {
+      .ui-hints {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="album-viewport" tabindex="0" role="region" aria-label="Photo book">
+    <div class="ui-hints">Drag or click page edge to flip • Double-click to close • Arrow keys</div>
+    
+    <!-- Background layer -->
+    <div id="album-background" style="position: absolute; inset: 0; z-index: 0; pointer-events: none;"></div>
+
+    <!-- Optional headline behind book -->
+    <div id="album-headline" aria-hidden="true"></div>
+
+    <!-- 3D Perspective Stage -->
+    <div id="stage" class="perspective-stage">
+      <div id="book-origin" class="book-origin">
+        <!-- Dynamic DOM rendered here: left cover, right cover, paper edges, flat left, flat right, curling leaves -->
+      </div>
+    </div>
+
+    <!-- Indicator Dots -->
+    <div id="indicators" class="indicator-bar" onpointerdown="event.stopPropagation()" ondblclick="event.stopPropagation()"></div>
+  </div>
+
+  <!-- Load Album Config & Media Data -->
+  <script src="album-data.js"></script>
+
+  <!-- 3D Book & Physics Engine -->
+  <script src="memory-album-engine.js"></script>
+
+</body>
+</html>
